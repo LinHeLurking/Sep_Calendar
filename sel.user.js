@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         SEP Calendar Genterator
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      1.0
 // @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js
-// @description  Gnerate calendar from SEP!
-// @author       You
+// @description  Generate calendar from SEP!
+// @author       LinHeLurking
 // @match        http://jwxk.ucas.ac.cn/course/personSchedule
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
