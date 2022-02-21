@@ -10,41 +10,392 @@
 // @grant        none
 // ==/UserScript==
 
-var $jscomp=$jscomp||{};$jscomp.scope={};$jscomp.createTemplateTagFirstArg=function(a){return a.raw=a};$jscomp.createTemplateTagFirstArgWithRaw=function(a,g){a.raw=g;return a};$jscomp.getGlobal=function(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var g=0;g<a.length;++g){var d=a[g];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");};$jscomp.global=$jscomp.getGlobal(this);
-$jscomp.checkEs6ConformanceViaProxy=function(){try{var a={},g=Object.create(new $jscomp.global.Proxy(a,{get:function(d,b,h){return d==a&&"q"==b&&h==g}}));return!0===g.q}catch(d){return!1}};$jscomp.USE_PROXY_FOR_ES6_CONFORMANCE_CHECKS=!1;$jscomp.ES6_CONFORMANCE=$jscomp.USE_PROXY_FOR_ES6_CONFORMANCE_CHECKS&&$jscomp.checkEs6ConformanceViaProxy();$jscomp.arrayIteratorImpl=function(a){var g=0;return function(){return g<a.length?{done:!1,value:a[g++]}:{done:!0}}};$jscomp.arrayIterator=function(a){return{next:$jscomp.arrayIteratorImpl(a)}};
-$jscomp.ASSUME_ES5=!1;$jscomp.ASSUME_NO_NATIVE_MAP=!1;$jscomp.ASSUME_NO_NATIVE_SET=!1;$jscomp.SIMPLE_FROUND_POLYFILL=!1;$jscomp.ISOLATE_POLYFILLS=!1;$jscomp.FORCE_POLYFILL_PROMISE=!1;$jscomp.FORCE_POLYFILL_PROMISE_WHEN_NO_UNHANDLED_REJECTION=!1;$jscomp.defineProperty=$jscomp.ASSUME_ES5||"function"==typeof Object.defineProperties?Object.defineProperty:function(a,g,d){if(a==Array.prototype||a==Object.prototype)return a;a[g]=d.value;return a};
-$jscomp.IS_SYMBOL_NATIVE="function"===typeof Symbol&&"symbol"===typeof Symbol("x");$jscomp.TRUST_ES6_POLYFILLS=!$jscomp.ISOLATE_POLYFILLS||$jscomp.IS_SYMBOL_NATIVE;$jscomp.polyfills={};$jscomp.propertyToPolyfillSymbol={};$jscomp.POLYFILL_PREFIX="$jscp$";var $jscomp$lookupPolyfilledValue=function(a,g){var d=$jscomp.propertyToPolyfillSymbol[g];if(null==d)return a[g];d=a[d];return void 0!==d?d:a[g]};
-$jscomp.polyfill=function(a,g,d,b){g&&($jscomp.ISOLATE_POLYFILLS?$jscomp.polyfillIsolated(a,g,d,b):$jscomp.polyfillUnisolated(a,g,d,b))};$jscomp.polyfillUnisolated=function(a,g,d,b){d=$jscomp.global;a=a.split(".");for(b=0;b<a.length-1;b++){var h=a[b];if(!(h in d))return;d=d[h]}a=a[a.length-1];b=d[a];g=g(b);g!=b&&null!=g&&$jscomp.defineProperty(d,a,{configurable:!0,writable:!0,value:g})};
-$jscomp.polyfillIsolated=function(a,g,d,b){var h=a.split(".");a=1===h.length;b=h[0];b=!a&&b in $jscomp.polyfills?$jscomp.polyfills:$jscomp.global;for(var n=0;n<h.length-1;n++){var l=h[n];if(!(l in b))return;b=b[l]}h=h[h.length-1];d=$jscomp.IS_SYMBOL_NATIVE&&"es6"===d?b[h]:null;g=g(d);null!=g&&(a?$jscomp.defineProperty($jscomp.polyfills,h,{configurable:!0,writable:!0,value:g}):g!==d&&(void 0===$jscomp.propertyToPolyfillSymbol[h]&&(d=1E9*Math.random()>>>0,$jscomp.propertyToPolyfillSymbol[h]=$jscomp.IS_SYMBOL_NATIVE?
-$jscomp.global.Symbol(h):$jscomp.POLYFILL_PREFIX+d+"$"+h),$jscomp.defineProperty(b,$jscomp.propertyToPolyfillSymbol[h],{configurable:!0,writable:!0,value:g})))};$jscomp.initSymbol=function(){};
-$jscomp.polyfill("Symbol",function(a){if(a)return a;var g=function(n,l){this.$jscomp$symbol$id_=n;$jscomp.defineProperty(this,"description",{configurable:!0,writable:!0,value:l})};g.prototype.toString=function(){return this.$jscomp$symbol$id_};var d="jscomp_symbol_"+(1E9*Math.random()>>>0)+"_",b=0,h=function(n){if(this instanceof h)throw new TypeError("Symbol is not a constructor");return new g(d+(n||"")+"_"+b++,n)};return h},"es6","es3");
-$jscomp.polyfill("Symbol.iterator",function(a){if(a)return a;a=Symbol("Symbol.iterator");for(var g="Array Int8Array Uint8Array Uint8ClampedArray Int16Array Uint16Array Int32Array Uint32Array Float32Array Float64Array".split(" "),d=0;d<g.length;d++){var b=$jscomp.global[g[d]];"function"===typeof b&&"function"!=typeof b.prototype[a]&&$jscomp.defineProperty(b.prototype,a,{configurable:!0,writable:!0,value:function(){return $jscomp.iteratorPrototype($jscomp.arrayIteratorImpl(this))}})}return a},"es6",
-"es3");$jscomp.iteratorPrototype=function(a){a={next:a};a[Symbol.iterator]=function(){return this};return a};$jscomp.makeIterator=function(a){var g="undefined"!=typeof Symbol&&Symbol.iterator&&a[Symbol.iterator];return g?g.call(a):$jscomp.arrayIterator(a)};$jscomp.owns=function(a,g){return Object.prototype.hasOwnProperty.call(a,g)};
-$jscomp.polyfill("WeakMap",function(a){function g(){if(!a||!Object.seal)return!1;try{var c=Object.seal({}),f=Object.seal({}),q=new a([[c,2],[f,3]]);if(2!=q.get(c)||3!=q.get(f))return!1;q.delete(c);q.set(f,4);return!q.has(c)&&4==q.get(f)}catch(z){return!1}}function d(){}function b(c){var f=typeof c;return"object"===f&&null!==c||"function"===f}function h(c){if(!$jscomp.owns(c,l)){var f=new d;$jscomp.defineProperty(c,l,{value:f})}}function n(c){if(!$jscomp.ISOLATE_POLYFILLS){var f=Object[c];f&&(Object[c]=
-function(q){if(q instanceof d)return q;Object.isExtensible(q)&&h(q);return f(q)})}}if($jscomp.USE_PROXY_FOR_ES6_CONFORMANCE_CHECKS){if(a&&$jscomp.ES6_CONFORMANCE)return a}else if(g())return a;var l="$jscomp_hidden_"+Math.random();n("freeze");n("preventExtensions");n("seal");var w=0,e=function(c){this.id_=(w+=Math.random()+1).toString();if(c){c=$jscomp.makeIterator(c);for(var f;!(f=c.next()).done;)f=f.value,this.set(f[0],f[1])}};e.prototype.set=function(c,f){if(!b(c))throw Error("Invalid WeakMap key");
-h(c);if(!$jscomp.owns(c,l))throw Error("WeakMap key fail: "+c);c[l][this.id_]=f;return this};e.prototype.get=function(c){return b(c)&&$jscomp.owns(c,l)?c[l][this.id_]:void 0};e.prototype.has=function(c){return b(c)&&$jscomp.owns(c,l)&&$jscomp.owns(c[l],this.id_)};e.prototype.delete=function(c){return b(c)&&$jscomp.owns(c,l)&&$jscomp.owns(c[l],this.id_)?delete c[l][this.id_]:!1};return e},"es6","es3");$jscomp.MapEntry=function(){};
-$jscomp.polyfill("Map",function(a){function g(){if($jscomp.ASSUME_NO_NATIVE_MAP||!a||"function"!=typeof a||!a.prototype.entries||"function"!=typeof Object.seal)return!1;try{var e=Object.seal({x:4}),c=new a($jscomp.makeIterator([[e,"s"]]));if("s"!=c.get(e)||1!=c.size||c.get({x:4})||c.set({x:4},"t")!=c||2!=c.size)return!1;var f=c.entries(),q=f.next();if(q.done||q.value[0]!=e||"s"!=q.value[1])return!1;q=f.next();return q.done||4!=q.value[0].x||"t"!=q.value[1]||!f.next().done?!1:!0}catch(z){return!1}}
-if($jscomp.USE_PROXY_FOR_ES6_CONFORMANCE_CHECKS){if(a&&$jscomp.ES6_CONFORMANCE)return a}else if(g())return a;var d=new WeakMap,b=function(e){this.data_={};this.head_=l();this.size=0;if(e){e=$jscomp.makeIterator(e);for(var c;!(c=e.next()).done;)c=c.value,this.set(c[0],c[1])}};b.prototype.set=function(e,c){e=0===e?0:e;var f=h(this,e);f.list||(f.list=this.data_[f.id]=[]);f.entry?f.entry.value=c:(f.entry={next:this.head_,previous:this.head_.previous,head:this.head_,key:e,value:c},f.list.push(f.entry),
-this.head_.previous.next=f.entry,this.head_.previous=f.entry,this.size++);return this};b.prototype.delete=function(e){e=h(this,e);return e.entry&&e.list?(e.list.splice(e.index,1),e.list.length||delete this.data_[e.id],e.entry.previous.next=e.entry.next,e.entry.next.previous=e.entry.previous,e.entry.head=null,this.size--,!0):!1};b.prototype.clear=function(){this.data_={};this.head_=this.head_.previous=l();this.size=0};b.prototype.has=function(e){return!!h(this,e).entry};b.prototype.get=function(e){return(e=
-h(this,e).entry)&&e.value};b.prototype.entries=function(){return n(this,function(e){return[e.key,e.value]})};b.prototype.keys=function(){return n(this,function(e){return e.key})};b.prototype.values=function(){return n(this,function(e){return e.value})};b.prototype.forEach=function(e,c){for(var f=this.entries(),q;!(q=f.next()).done;)q=q.value,e.call(c,q[1],q[0],this)};b.prototype[Symbol.iterator]=b.prototype.entries;var h=function(e,c){var f=c&&typeof c;"object"==f||"function"==f?d.has(c)?f=d.get(c):
-(f=""+ ++w,d.set(c,f)):f="p_"+c;var q=e.data_[f];if(q&&$jscomp.owns(e.data_,f))for(e=0;e<q.length;e++){var z=q[e];if(c!==c&&z.key!==z.key||c===z.key)return{id:f,list:q,index:e,entry:z}}return{id:f,list:q,index:-1,entry:void 0}},n=function(e,c){var f=e.head_;return $jscomp.iteratorPrototype(function(){if(f){for(;f.head!=e.head_;)f=f.previous;for(;f.next!=f.head;)return f=f.next,{done:!1,value:c(f)};f=null}return{done:!0,value:void 0}})},l=function(){var e={};return e.previous=e.next=e.head=e},w=0;
-return b},"es6","es3");
-$jscomp.polyfill("Set",function(a){function g(){if($jscomp.ASSUME_NO_NATIVE_SET||!a||"function"!=typeof a||!a.prototype.entries||"function"!=typeof Object.seal)return!1;try{var b=Object.seal({x:4}),h=new a($jscomp.makeIterator([b]));if(!h.has(b)||1!=h.size||h.add(b)!=h||1!=h.size||h.add({x:4})!=h||2!=h.size)return!1;var n=h.entries(),l=n.next();if(l.done||l.value[0]!=b||l.value[1]!=b)return!1;l=n.next();return l.done||l.value[0]==b||4!=l.value[0].x||l.value[1]!=l.value[0]?!1:n.next().done}catch(w){return!1}}
-if($jscomp.USE_PROXY_FOR_ES6_CONFORMANCE_CHECKS){if(a&&$jscomp.ES6_CONFORMANCE)return a}else if(g())return a;var d=function(b){this.map_=new Map;if(b){b=$jscomp.makeIterator(b);for(var h;!(h=b.next()).done;)this.add(h.value)}this.size=this.map_.size};d.prototype.add=function(b){b=0===b?0:b;this.map_.set(b,b);this.size=this.map_.size;return this};d.prototype.delete=function(b){b=this.map_.delete(b);this.size=this.map_.size;return b};d.prototype.clear=function(){this.map_.clear();this.size=0};d.prototype.has=
-function(b){return this.map_.has(b)};d.prototype.entries=function(){return this.map_.entries()};d.prototype.values=function(){return this.map_.values()};d.prototype.keys=d.prototype.values;d.prototype[Symbol.iterator]=d.prototype.values;d.prototype.forEach=function(b,h){var n=this;this.map_.forEach(function(l){return b.call(h,l,l,n)})};return d},"es6","es3");
-$jscomp.checkStringArgs=function(a,g,d){if(null==a)throw new TypeError("The 'this' value for String.prototype."+d+" must not be null or undefined");if(g instanceof RegExp)throw new TypeError("First argument to String.prototype."+d+" must not be a regular expression");return a+""};
-$jscomp.polyfill("String.prototype.startsWith",function(a){return a?a:function(g,d){var b=$jscomp.checkStringArgs(this,g,"startsWith");g+="";var h=b.length,n=g.length;d=Math.max(0,Math.min(d|0,b.length));for(var l=0;l<n&&d<h;)if(b[d++]!=g[l++])return!1;return l>=n}},"es6","es3");
-(function(){function a(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(k){var m=16*Math.random()|0;return("x"==k?m:m&3|8).toString(16)})}function g(k,m){m=void 0===m?null:m;m=m instanceof Date?new Date(m):new Date;k=k.match(/(\d\d):(\d\d):(\d\d)/);m.setHours(parseInt(k[1]));m.setMinutes(parseInt(k[2]));m.setSeconds(parseInt(k[3]));return m}var d=new Map;d.set("\u661f\u671f\u4e00","MO");d.set("\u661f\u671f\u4e8c","TU");d.set("\u661f\u671f\u4e09","WE");d.set("\u661f\u671f\u56db",
-"TH");d.set("\u661f\u671f\u4e94","FR");d.set("\u661f\u671f\u516d","SA");d.set("\u661f\u671f\u4e03","SU");var b=new Map;b.set("\u661f\u671f\u4e00",1);b.set("\u661f\u671f\u4e8c",2);b.set("\u661f\u671f\u4e09",3);b.set("\u661f\u671f\u56db",4);b.set("\u661f\u671f\u4e94",5);b.set("\u661f\u671f\u516d",6);b.set("\u661f\u671f\u4e03",7);var h=new Map;h.set(1,"08:30:00");h.set(2,"09:20:00");h.set(3,"10:30:00");h.set(4,"11:20:00");h.set(5,"13:30:00");h.set(6,"14:20:00");h.set(7,"15:30:00");h.set(8,"16:20:00");
-h.set(9,"18:10:00");h.set(10,"19:00:00");h.set(11,"20:10:00");h.set(12,"21:00:00");var n=new Map;n.set(1,"09:20:00");n.set(2,"10:10:00");n.set(3,"11:20:00");n.set(4,"12:10:00");n.set(5,"14:20:00");n.set(6,"15:10:00");n.set(7,"16:20:00");n.set(8,"17:10:00");n.set(9,"19:00:00");n.set(10,"19:50:00");n.set(11,"21:00:00");n.set(12,"21:50:00");var l=new Map;l.set(1,"08:00:00");l.set(2,"08:50:00");l.set(3,"10:00:00");l.set(4,"10:50:00");l.set(5,"13:30:00");l.set(6,"14:20:00");l.set(7,"15:10:00");l.set(8,
-"16:10:00");l.set(9,"18:10:00");l.set(10,"19:00:00");l.set(11,"20:00:00");l.set(12,"20:50:00");var w=new Map;w.set(1,"08:50:00");w.set(2,"09:40:00");w.set(3,"10:50:00");w.set(4,"11:40:00");w.set(5,"14:20:00");w.set(6,"15:10:00");w.set(7,"16:10:00");w.set(8,"17:00:00");w.set(9,"19:00:00");w.set(10,"19:50:00");w.set(11,"20:50:00");w.set(12,"21:40:00");var e=function(k,m,r,p,t){this.courseName=k;this.courseWeekday=m;this.courseSessionIds=r;this.courseLocation=p;this.courseWeeks=t},c=function(k,m){for(k=
-k.toString();k.length<m;)k="0"+k;return k},f=function(k,m){return(void 0===m?0:m)?c(k.getUTCFullYear(),2)+c(k.getUTCMonth()+1,2)+c(k.getUTCDate(),2)+"T"+c(k.getUTCHours(),2)+c(k.getUTCMinutes(),2)+c(k.getUTCSeconds(),2)+"Z":c(k.getFullYear(),2)+c(k.getMonth()+1,2)+c(k.getDate(),2)+"T"+c(k.getHours(),2)+c(k.getMinutes(),2)+c(k.getSeconds(),2)},q=function(k,m,r,p){this.freq=k;this.until=m;this.interval=r;this.byDay=p},z=function(k,m,r,p,t){this.description=k;this.location=m;this.startTimeInDay=r;this.endTimeInDay=
-p;this.rule=t},A=function(){this.events=[]};A.prototype.addEvent=function(k,m,r,p,t){this.events.push(new z(k,m,r,p,t))};A.prototype.toIcsString=function(k){k="BEGIN:VCALENDAR\nVERSION:2.0\nX-WR-CALNAME:"+k+"\nX-APPLE-CALENDAR-COLOR:#ff9500\nX-WR-TIMEZONE:Asia/Shanghai\nBEGIN:VTIMEZONE\nTZID:Asia/Shanghai\nX-LIC-LOCATION:Asia/Shanghai\nBEGIN:STANDARD\nTZOFFSETFROM:+0800\nTZOFFSETTO:+0800\nTZNAME:CST\nDTSTART:19700101T000000\nEND:STANDARD\nEND:VTIMEZONE";var m="",r=f(new Date,!0);this.events.forEach(function(p){var t=
-p.endTimeInDay,u=f(p.startTimeInDay,!1);t=f(t,!1);p="BEGIN:VEVENT\nCREATED:"+r+"\nDTSTAMP:"+r+"\nSUMMARY:"+p.description+"\nDESCRIPTION:\nLOCATION:"+p.location+"\nTZID:Asia/Shanghai\nSEQUENCE:0\nUID:"+a()+"\nRRULE:FREQ=WEEKLY;UNTIL="+f(p.rule.until,!1)+";INTERVAL="+p.rule.interval+",BYDAY="+p.rule.byDay.join(",")+"\nDTSTART;TZID=Asia/Shanghai:"+u+"\nDTEND;TZID=Asia/Shanghai:"+t+"\nX-APPLE-TRAVEL-ADVISORY-BEHAVIOR:AUTOMATIC\nBEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:This is an event reminder\nTRIGGER:-P0DT0H15M0S\nX-WR-ALARMUID:"+
-a()+"\nUID:"+a()+"\nEND:VALARM\nEND:VEVENT";m+=p+"\n\n"});return k+"\n\n"+m+"\n\nEND:VCALENDAR\n"};var H=function(k,m,r){r=void 0===r?!1:r;var p=new A,t=h,u=n;r&&(t=l,u=w);k.forEach(function(v){var x=new Date(m);x.setDate(x.getDate()+7*v.courseWeeks.at(-1));var y=new Date(m);y.setDate(y.getDate()+7*(v.courseWeeks[0]-1)+b.get(v.courseWeekday)-1);var D=g(t.get(Number(v.courseSessionIds[0])),y);y=g(u.get(Number(v.courseSessionIds.at(-1))),y);var E=v.courseLocation,F=v.courseName,B=[];v.courseWeekday instanceof
-Array?v.courseWeekday.forEach(function(G){B.push(d.get(G))}):B.push(d.get(v.courseWeekday));var C=1;3<v.courseWeeks.length&&v.courseWeeks[1]==v.courseWeeks[0]+2&&v.courseWeeks[2]==v.courseWeeks[1]+2&&(C=2);v=new q("WEEKLY",x,C,B);p.addEvent(F,E,D,y,v)});return p},I=function(k){var m=[];k.forEach(function(r){$.get(r,function(p){p=$(p);var t=$("div.mc-body > p",p)[0].innerText,u=$("div.mc-body > table > tbody > tr:nth-child(1) > td",p)[0].innerText,v=$("div.mc-body > table > tbody > tr:nth-child(2) > td",
-p)[0].innerText,x=$("div.mc-body > table > tbody > tr:nth-child(3) > td",p)[0].innerText;t.startsWith("course name\uff1a")&&(t=t.substr(12));x=x.split("\u3001");var y=u.split("\uff1a")[0];u=u.split("\uff1a")[1].trim();u=u.substr(1,u.length-3).split("\u3001");m.push(new e(t,y,u,v,x));3<$("div.mc-body > table > tbody > tr",p).length&&(u=$("div.mc-body > table > tbody > tr:nth-child(4) > td",p)[0].innerText,v=$("div.mc-body > table > tbody > tr:nth-child(5) > td",p)[0].innerText,x=$("div.mc-body > table > tbody > tr:nth-child(6) > td",
-p)[0].innerText,t.startsWith("course name\uff1a")&&(t=t.substr(12)),x=x.split("\u3001"),y=u.split("\uff1a")[0],u=u.split("\uff1a")[1].trim(),u=u.substr(1,u.length-3).split("\u3001"),m.push(new e(t,y,u,v,x)))})});return m}(function(k){for(var m=new Set,r=0;r<k.childElementCount;r+=1)for(var p=0;p<k.children[r].childElementCount;p+=1)if(0<k.children[r].children[p].childElementCount)for(var t=0;t<k.children[r].children[p].childElementCount;t+=1){var u=$("[href]",k.children[r].children[p].children[t].firstChild);
-m.add(u.prevObject[0].href)}return m}($("body > div.container-fluid > div > div.m-cbox.m-lgray > div.mc-body > table > tbody")[0]));$("body > div.container-fluid > div").append('<div><input type="text" id="startWeekStr" value="2021-08-30">  \u8bf7\u6309\u7167\u6837\u4f8b\u7684 YYYY-MM-DD \u683c\u5f0f\u8f93\u5165\u672c\u5b66\u671f\u7b2c\u4e00\u5468\u5468\u4e00\u7684\u65e5\u671f</div>');$("body > div.container-fluid > div").append('<div> <input type="checkbox" id="undergraduateButton" name="roleBox"> \u6211\u662f\u7389\u6cc9\u8def\u672c\u79d1\u751f </div> <div> <input type="checkbox" id="masterOrPhdButton" name="roleBox"> \u6211\u662f\u96c1\u6816\u6e56\u7855\u58eb\u751f/\u535a\u58eb\u751f </div>');
-$("input:checkbox").on("click",function(){var k=$(this);if(k.is(":checked")){var m="input:checkbox[name='"+k.attr("name")+"']";$(m).prop("checked",!1);k.prop("checked",!0)}else k.prop("checked",!1)});$("body > div.container-fluid > div").append('<button type="button" >\u751f\u6210 iCS \u6587\u4ef6</button>');$("body > div.container-fluid > div > button").on("click",function(){var k=$("#undergraduateButton").is(":checked"),m=$("#masterOrPhdButton").is(":checked");if(k||m){k=new Date($("#startWeekStr").val());
-m=H(I,k);k=$("#page-title > span").text().substr(0,9);m=m.toIcsString(k);var r=document.createElement("a");r.setAttribute("href","data:text/plain;charset=utf-8,"+encodeURIComponent(m));r.setAttribute("download",k+".ics");r.style.display="none";document.body.appendChild(r);r.click();document.body.removeChild(r)}})})();
+(function () {
+    'use strict';
+
+
+    var chineseWeekDayToWeekDayLabel = new Map();
+    chineseWeekDayToWeekDayLabel.set("星期一", "MO");
+    chineseWeekDayToWeekDayLabel.set("星期二", "TU");
+    chineseWeekDayToWeekDayLabel.set("星期三", "WE");
+    chineseWeekDayToWeekDayLabel.set("星期四", "TH");
+    chineseWeekDayToWeekDayLabel.set("星期五", "FR");
+    chineseWeekDayToWeekDayLabel.set("星期六", "SA");
+    chineseWeekDayToWeekDayLabel.set("星期七", "SU");
+
+    var chineseWeekDayToWeekDayNum = new Map();
+    chineseWeekDayToWeekDayNum.set("星期一", 1);
+    chineseWeekDayToWeekDayNum.set("星期二", 2);
+    chineseWeekDayToWeekDayNum.set("星期三", 3);
+    chineseWeekDayToWeekDayNum.set("星期四", 4);
+    chineseWeekDayToWeekDayNum.set("星期五", 5);
+    chineseWeekDayToWeekDayNum.set("星期六", 6);
+    chineseWeekDayToWeekDayNum.set("星期七", 7);
+
+    var sessionStartTimeYQH = new Map();
+    sessionStartTimeYQH.set(1, "08:30:00");
+    sessionStartTimeYQH.set(2, "09:20:00");
+    sessionStartTimeYQH.set(3, "10:30:00");
+    sessionStartTimeYQH.set(4, "11:20:00");
+    sessionStartTimeYQH.set(5, "13:30:00");
+    sessionStartTimeYQH.set(6, "14:20:00");
+    sessionStartTimeYQH.set(7, "15:30:00");
+    sessionStartTimeYQH.set(8, "16:20:00");
+    sessionStartTimeYQH.set(9, "18:10:00");
+    sessionStartTimeYQH.set(10, "19:00:00");
+    sessionStartTimeYQH.set(11, "20:10:00");
+    sessionStartTimeYQH.set(12, "21:00:00");
+
+    var sessionEndTimeYQH = new Map();
+    sessionEndTimeYQH.set(1, "09:20:00");
+    sessionEndTimeYQH.set(2, "10:10:00");
+    sessionEndTimeYQH.set(3, "11:20:00");
+    sessionEndTimeYQH.set(4, "12:10:00");
+    sessionEndTimeYQH.set(5, "14:20:00");
+    sessionEndTimeYQH.set(6, "15:10:00");
+    sessionEndTimeYQH.set(7, "16:20:00");
+    sessionEndTimeYQH.set(8, "17:10:00");
+    sessionEndTimeYQH.set(9, "19:00:00");
+    sessionEndTimeYQH.set(10, "19:50:00");
+    sessionEndTimeYQH.set(11, "21:00:00");
+    sessionEndTimeYQH.set(12, "21:50:00");
+
+    var sessionStartTimeYQL = new Map();
+    sessionStartTimeYQL.set(1, "08:00:00");
+    sessionStartTimeYQL.set(2, "08:50:00");
+    sessionStartTimeYQL.set(3, "10:00:00");
+    sessionStartTimeYQL.set(4, "10:50:00");
+    sessionStartTimeYQL.set(5, "13:30:00");
+    sessionStartTimeYQL.set(6, "14:20:00");
+    sessionStartTimeYQL.set(7, "15:10:00");
+    sessionStartTimeYQL.set(8, "16:10:00");
+    sessionStartTimeYQL.set(9, "18:10:00");
+    sessionStartTimeYQL.set(10, "19:00:00");
+    sessionStartTimeYQL.set(11, "20:00:00");
+    sessionStartTimeYQL.set(12, "20:50:00");
+
+    var sessionEndTimeYQL = new Map();
+    sessionEndTimeYQL.set(1, "08:50:00");
+    sessionEndTimeYQL.set(2, "09:40:00");
+    sessionEndTimeYQL.set(3, "10:50:00");
+    sessionEndTimeYQL.set(4, "11:40:00");
+    sessionEndTimeYQL.set(5, "14:20:00");
+    sessionEndTimeYQL.set(6, "15:10:00");
+    sessionEndTimeYQL.set(7, "16:10:00");
+    sessionEndTimeYQL.set(8, "17:00:00");
+    sessionEndTimeYQL.set(9, "19:00:00");
+    sessionEndTimeYQL.set(10, "19:50:00");
+    sessionEndTimeYQL.set(11, "20:50:00");
+    sessionEndTimeYQL.set(12, "21:40:00");
+
+    const tbodySel = (tbody) => {
+        var courseSet = new Set();
+        for (let i = 0; i < tbody.childElementCount; i += 1) {
+            for (let j = 0; j < tbody.children[i].childElementCount; j += 1) {
+                if (tbody.children[i].children[j].childElementCount > 0) {
+                    for (let k = 0; k < tbody.children[i].children[j].childElementCount; k += 1) {
+                        var nd = $("[href]", tbody.children[i].children[j].children[k].firstChild);
+                        courseSet.add(nd.prevObject[0].href);
+                    }
+                }
+            }
+        }
+        return courseSet;
+    };
+
+    class CourseInfo {
+        constructor(courseName, courseWeekday, courseSessionIds, courseLocation, courseWeeks) {
+            this.courseName = courseName;
+            this.courseWeekday = courseWeekday;
+            this.courseSessionIds = courseSessionIds;
+            this.courseLocation = courseLocation;
+            this.courseWeeks = courseWeeks;
+        };
+    };
+
+    const getCourseInfo = (urls) => {
+        var resArr = new Array();
+        urls.forEach(item => {
+            $.get(item, (data) => {
+                var courseHTML = $(data);
+                var courseName = $("div.mc-body > p", courseHTML)[0].innerText;
+                var courseDateTime = $("div.mc-body > table > tbody > tr:nth-child(1) > td", courseHTML)[0].innerText;
+                var courseLocation = $("div.mc-body > table > tbody > tr:nth-child(2) > td", courseHTML)[0].innerText;
+                var courseWeeks = $("div.mc-body > table > tbody > tr:nth-child(3) > td", courseHTML)[0].innerText;
+
+                if (courseName.startsWith("course name：")) {
+                    courseName = courseName.substr("course name：".length);
+                }
+                courseWeeks = courseWeeks.split("、");
+                var courseWeekday = courseDateTime.split("：")[0];
+                var courseSessionIds = courseDateTime.split("：")[1].trim();
+                courseSessionIds = courseSessionIds.substr(1, courseSessionIds.length - 3).split("、");
+
+                resArr.push(new CourseInfo(courseName, courseWeekday, courseSessionIds, courseLocation, courseWeeks));
+
+                if ($("div.mc-body > table > tbody > tr", courseHTML).length > 3) {
+                    var courseDateTime = $("div.mc-body > table > tbody > tr:nth-child(4) > td", courseHTML)[0].innerText;
+                    var courseLocation = $("div.mc-body > table > tbody > tr:nth-child(5) > td", courseHTML)[0].innerText;
+                    var courseWeeks = $("div.mc-body > table > tbody > tr:nth-child(6) > td", courseHTML)[0].innerText;
+
+                    if (courseName.startsWith("course name：")) {
+                        courseName = courseName.substr("course name：".length);
+                    }
+                    courseWeeks = courseWeeks.split("、");
+                    var courseWeekday = courseDateTime.split("：")[0];
+                    var courseSessionIds = courseDateTime.split("：")[1].trim();
+                    courseSessionIds = courseSessionIds.substr(1, courseSessionIds.length - 3).split("、");
+
+                    resArr.push(new CourseInfo(courseName, courseWeekday, courseSessionIds, courseLocation, courseWeeks));
+                }
+            });
+        });
+        return resArr;
+    };
+
+
+    // https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    const padZ = (str, n) => {
+        str = str.toString();
+        while (str.length < n) {
+            str = "0" + str;
+        }
+        return str;
+    }
+
+
+
+    function parseTime(t, forThisDay = null) {
+        var d = null;
+        if (forThisDay instanceof Date) {
+            d = new Date(forThisDay);
+        } else {
+            d = new Date();
+        }
+        var time = t.match(/(\d\d):(\d\d):(\d\d)/);
+        d.setHours(parseInt(time[1]));
+        d.setMinutes(parseInt(time[2]));
+        d.setSeconds(parseInt(time[3]));
+        return d;
+    }
+
+    const getIcsTimeStamp = (date, useZeroZone = false) => {
+        if (useZeroZone) {
+            return padZ(date.getUTCFullYear(), 2) +
+                padZ(date.getUTCMonth() + 1, 2) +
+                padZ(date.getUTCDate(), 2) + "T" +
+                padZ(date.getUTCHours(), 2) +
+                padZ(date.getUTCMinutes(), 2) +
+                padZ(date.getUTCSeconds(), 2) + "Z";
+        } else {
+            return padZ(date.getFullYear(), 2) +
+                padZ(date.getMonth() + 1, 2) +
+                padZ(date.getDate(), 2) + "T" +
+                padZ(date.getHours(), 2) +
+                padZ(date.getMinutes(), 2) +
+                padZ(date.getSeconds(), 2);
+        }
+    }
+
+
+    class RecursiveRule {
+        constructor(freq, until, interval, byDay) {
+            this.freq = freq;
+            this.until = until;
+            this.interval = interval;
+            this.byDay = byDay;
+        }
+    };
+
+    class Event {
+        constructor(description, location, startTimeInDay, endTimeInDay, rule) {
+            this.description = description;
+            this.location = location;
+            this.startTimeInDay = startTimeInDay;
+            this.endTimeInDay = endTimeInDay;
+            this.rule = rule;
+        }
+    }
+
+    class ICS {
+        constructor() {
+            this.events = new Array();
+        }
+
+        addEvent(description, location, startTimeInDay, endTimeInDay, rule) {
+            this.events.push(new Event(description, location, startTimeInDay, endTimeInDay, rule));
+        }
+
+        toIcsString(name) {
+            var head = `BEGIN:VCALENDAR
+VERSION:2.0
+X-WR-CALNAME:${name}
+X-APPLE-CALENDAR-COLOR:#ff9500
+X-WR-TIMEZONE:Asia/Shanghai
+BEGIN:VTIMEZONE
+TZID:Asia/Shanghai
+X-LIC-LOCATION:Asia/Shanghai
+BEGIN:STANDARD
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+TZNAME:CST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE`;
+
+            var tail = `END:VCALENDAR`;
+
+            var eventsStr = ""
+            var currentIcsTimeStampZ = getIcsTimeStamp(new Date(), true);
+            this.events.forEach((vEvent) => {
+                var eventStartInDay = vEvent.startTimeInDay;
+                var eventEndInDay = vEvent.endTimeInDay;
+                var eventStartInDayTimeStamp = getIcsTimeStamp(eventStartInDay, false);
+                var eventEndInDayTimeStamp = getIcsTimeStamp(eventEndInDay, false);
+
+                var eventStr = `BEGIN:VEVENT
+CREATED:${currentIcsTimeStampZ}
+DTSTAMP:${currentIcsTimeStampZ}
+SUMMARY:${vEvent.description}
+DESCRIPTION:
+LOCATION:${vEvent.location}
+TZID:Asia/Shanghai
+SEQUENCE:0
+UID:${uuidv4()}
+RRULE:FREQ=WEEKLY;UNTIL=${getIcsTimeStamp(vEvent.rule.until, false)};INTERVAL=${vEvent.rule.interval},BYDAY=${vEvent.rule.byDay.join(",")}
+DTSTART;TZID=Asia/Shanghai:${eventStartInDayTimeStamp}
+DTEND;TZID=Asia/Shanghai:${eventEndInDayTimeStamp}
+X-APPLE-TRAVEL-ADVISORY-BEHAVIOR:AUTOMATIC
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:This is an event reminder
+TRIGGER:-P0DT0H15M0S
+X-WR-ALARMUID:${uuidv4()}
+UID:${uuidv4()}
+END:VALARM
+END:VEVENT`;
+
+                eventsStr += eventStr + "\n\n";
+            });
+
+            var res = `${head}\n\n${eventsStr}\n\n${tail}\n`
+
+            return res;
+        }
+    };
+
+
+    const genIcsFromInfo = (allCourseInfo, startWeekMondayUTC, isUndergraduate = false) => {
+        var calendar = new ICS();
+
+        var sessionStartTime = sessionStartTimeYQH;
+        var sessionEndTime = sessionEndTimeYQH;
+
+        if (isUndergraduate) {
+            sessionStartTime = sessionStartTimeYQL;
+            sessionEndTime = sessionEndTimeYQL;
+        }
+
+        allCourseInfo.forEach((course) => {
+            var seriesUntil = new Date(startWeekMondayUTC);
+            seriesUntil.setDate(seriesUntil.getDate() + course.courseWeeks.at(-1) * 7);
+
+            var seriesStartDate = new Date(startWeekMondayUTC);
+            seriesStartDate.setDate(seriesStartDate.getDate() + (course.courseWeeks[0] - 1) * 7 + chineseWeekDayToWeekDayNum.get(course.courseWeekday) - 1);
+
+
+            var startTimeInDay = parseTime(sessionStartTime.get(Number(course.courseSessionIds[0])), seriesStartDate);
+            var endTimeInDay = parseTime(sessionEndTime.get(Number(course.courseSessionIds.at(-1))), seriesStartDate);
+
+            var location = course.courseLocation;
+            var description = course.courseName;
+            var weekday = new Array();
+            if (!(course.courseWeekday instanceof Array)) {
+                weekday.push(chineseWeekDayToWeekDayLabel.get(course.courseWeekday));
+            } else {
+                course.courseWeekday.forEach((day) => {
+                    weekday.push(chineseWeekDayToWeekDayLabel.get(day));
+                });
+            }
+            var interval = 1;
+            // check if it is an 'every 2 week' events
+            if (course.courseWeeks.length > 3) {
+                if (course.courseWeeks[1] == course.courseWeeks[0] + 2 &&
+                    course.courseWeeks[2] == course.courseWeeks[1] + 2) {
+                    interval = 2;
+                }
+            }
+            var rule = new RecursiveRule("WEEKLY", seriesUntil, interval, weekday);
+            calendar.addEvent(description, location, startTimeInDay, endTimeInDay, rule);
+        });
+        return calendar;
+    };
+
+
+    var tbody = $("body > div.container-fluid > div > div.m-cbox.m-lgray > div.mc-body > table > tbody")[0];
+    // console.log(tbody);
+    var courseURL = tbodySel(tbody);
+    var allCourseInfo = getCourseInfo(courseURL);
+    // console.log(courseInfo);
+
+    var startWeekMondayInputHTML = `<div><input type="text" id="startWeekStr" value="2021-08-30">  请按照样例的 YYYY-MM-DD 格式输入本学期第一周周一的日期</div>`;
+    var undergraduateCheckboxHTML = `<input type="checkbox" id="undergraduateButton" name="roleBox">`;
+    var masterOrPhdCheckboxHTML = `<input type="checkbox" id=\"masterOrPhdButton" name="roleBox">`;
+    var checkboxHTML = `<div> ${undergraduateCheckboxHTML} 我是玉泉路本科生 </div> <div> ${masterOrPhdCheckboxHTML} 我是雁栖湖硕士生/博士生 </div>`;
+    var genCalendarButtonHTML = `<div><button type="button" >生成 iCS 文件</button></div>`;
+    var insertedUIPos = "body > div.container-fluid > div > div.m-cbox.m-lgray"
+    $(insertedUIPos).append(startWeekMondayInputHTML);
+    $(insertedUIPos).append(checkboxHTML);
+    $(insertedUIPos).append(genCalendarButtonHTML);
+
+    // thanks https://stackoverflow.com/questions/9709209/html-select-only-one-checkbox-in-a-group
+
+    $("input:checkbox").on('click', function () {
+        // in the handler, 'this' refers to the box clicked on
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            // the name of the box is retrieved using the .attr() method
+            // as it is assumed and expected to be immutable
+            var group = "input:checkbox[name='" + $box.attr("name") + "']";
+            // the checked state of the group/box on the other hand will change
+            // and the current value is retrieved using .prop() method
+            $(group).prop("checked", false);
+            $box.prop("checked", true);
+        } else {
+            $box.prop("checked", false);
+        }
+    });
+
+    $(insertedUIPos + " > div > button").on("click", () => {
+        var isUndergraduate = $("#undergraduateButton").is(":checked");
+        var isMasterOrPhd = $("#masterOrPhdButton").is(":checked");
+        if (isUndergraduate || isMasterOrPhd) {
+            var startWeekMondayUTC = new Date($("#startWeekStr").val());
+            var calendar = genIcsFromInfo(allCourseInfo, startWeekMondayUTC);
+            var name = $("#page-title > span").text().substr(0, 9);
+            var calendarStr = calendar.toIcsString(name);
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(calendarStr));
+            element.setAttribute('download', `${name}.ics`);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+    });
+
+    // Insert some extra empty lines to avoid UI being covered by footer
+    var extraEmptyLinePos = "body > div.container-fluid > div";
+    $(extraEmptyLinePos).append(`<br></br><br></br><br></br>`);
+})();
