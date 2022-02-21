@@ -13,7 +13,6 @@
 (function () {
     'use strict';
 
-
     var chineseWeekDayToWeekDayLabel = new Map();
     chineseWeekDayToWeekDayLabel.set("星期一", "MO");
     chineseWeekDayToWeekDayLabel.set("星期二", "TU");
@@ -203,7 +202,6 @@
                 padZ(date.getSeconds(), 2);
         }
     }
-
 
     class RecursiveRule {
         constructor(freq, until, interval, byDay) {
