@@ -5,7 +5,7 @@
 // @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js
 // @description  Generate calendar from SEP!
 // @author       LinHeLurking
-// @match        http://jwxk.ucas.ac.cn/course/personSchedule
+// @match        *://jwxk.ucas.ac.cn/course/personSchedule
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // ==/UserScript==
