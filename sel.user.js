@@ -20,7 +20,7 @@
     chineseWeekDayToWeekDayLabel.set("星期四", "TH");
     chineseWeekDayToWeekDayLabel.set("星期五", "FR");
     chineseWeekDayToWeekDayLabel.set("星期六", "SA");
-    chineseWeekDayToWeekDayLabel.set("星期七", "SU");
+    chineseWeekDayToWeekDayLabel.set("星期日", "SU");
 
     var chineseWeekDayToWeekDayNum = new Map();
     chineseWeekDayToWeekDayNum.set("星期一", 1);
@@ -29,7 +29,7 @@
     chineseWeekDayToWeekDayNum.set("星期四", 4);
     chineseWeekDayToWeekDayNum.set("星期五", 5);
     chineseWeekDayToWeekDayNum.set("星期六", 6);
-    chineseWeekDayToWeekDayNum.set("星期七", 7);
+    chineseWeekDayToWeekDayNum.set("星期日", 7);
 
     var sessionStartTimeYQH = new Map();
     sessionStartTimeYQH.set(1, "08:30:00");
